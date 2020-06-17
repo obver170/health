@@ -1,0 +1,17 @@
+{% load static %}
+{% load bootstrap4%}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{%block title%} {% endblock %}</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+</head>
+<body>
+    <div class="container-fluid">
+        {%block content%} {% endblock %}
+    </div>
+</body>
+</html>
