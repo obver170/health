@@ -1,7 +1,11 @@
-<!doctype html>
+{% load bootstrap4 %}
+
+<!Doctype html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
     <title>Артериальное давление</title>
 </head>
 <body>
@@ -17,10 +21,22 @@
         </p>
     {% endfor %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Добавить</button>
-    </form>
+<!--    <form method="post">-->
+<!--        {% csrf_token %}-->
+<!--        {{form.as_p}}-->
+<!--        <button type="submit">Добавить</button>-->
+<!--    </form>-->
+    <div class="container-fluid">
+             <div class="row">
+                <div class="col-sm-4 ml-auto mt-2 pt-2 mr-auto " >
+                  <h3>Артериальное давление</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% bootstrap_form form layout='vertical'%}
+                        {% buttons submit='Добавить' %} {% endbuttons %}
+                    </form>
+                </div>
+             </div>
+        </div>
 </body>
 </html>
