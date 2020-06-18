@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Arterial
 from .forms import ArterialForm
 from .code import check, ArterialCheck
+from account.models import Person
 
 # def index(request):
 #     pressure = Arterial.objects.all()
@@ -23,8 +24,10 @@ def index(request):
 
     pressure = Arterial.objects.all()
     form = ArterialForm()
+    person = Person.objects.get(pk=1)
     context = {'pressure': pressure,
                    'form': form,
+               'person': person,
                 }
 
     return render(request, 'monitor/index.html', context)

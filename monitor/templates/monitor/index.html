@@ -6,6 +6,7 @@
 
 {% block content %}
     <h1>Артериальное давление</h1>
+    <p> {{person}} </p>
     {% for pr in pressure %}
         <p> Имя: <b>{{ pr.name }}</b>,
             пол: {{pr.sex}},
