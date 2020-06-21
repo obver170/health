@@ -3,6 +3,7 @@ from .models import Arterial
 from .forms import ArterialForm
 from .code import check, ArterialCheck
 from account.models import Person
+from django.contrib.auth.decorators import login_required
 
 # def index(request):
 #     pressure = Arterial.objects.all()
@@ -12,6 +13,8 @@ from account.models import Person
 #                }
 #     return render(request, 'monitor/index.html', context)
 
+
+@login_required
 def index(request):
     if request.method == "POST":
         form = ArterialForm(request.POST)
