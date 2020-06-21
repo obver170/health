@@ -1,10 +1,10 @@
 from django.urls import path
 
-from .views import index
+from .views import index, bp
 
 app_name = 'monitor'
 
 urlpatterns = [
     path('', index, name='index'),
-    path('bp/', index, name='bp'),
+    path('bp/', bp, name='bp'),
 ]
