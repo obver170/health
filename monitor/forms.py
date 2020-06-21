@@ -1,10 +1,9 @@
 from django import forms
 from .models import Arterial
 
+
 class ArterialForm(forms.ModelForm):
-
-
-
+    person = forms.IntegerField(label='Профиль', widget=forms.widgets.HiddenInput)
     # Делаю поле скрытым и необязательным
     name = forms.CharField(label='Имя', initial='Василий', required=False, widget=forms.widgets.HiddenInput)
     sex = forms.CharField(label='Пол', max_length=10, required=False, widget=forms.widgets.HiddenInput)
@@ -20,4 +19,4 @@ class ArterialForm(forms.ModelForm):
     class Meta:
         model = Arterial
         # fields = ('name', 'sex', 'age', 'top_pressure', 'bottom_pressure',)
-        fields = ('name', 'top_pressure', 'bottom_pressure',)
+        fields = ('top_pressure', 'bottom_pressure',)

@@ -26,6 +26,7 @@ def index(request):
 @login_required
 def bp(request):
     person = Person.objects.get(user=request.user)
+    print('!!!!!!!' + str(person.pk))
     name = person.name
     sex = person.sex
     today = date.today()
@@ -38,6 +39,7 @@ def bp(request):
         form = ArterialForm(request.POST)
         if form.is_valid():
             arterial = form.save(commit=False)
+            arterial.person = person.pk
             arterial.name = name
             arterial.sex = sex
             arterial.age = age

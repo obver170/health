@@ -1,9 +1,10 @@
 from django.db import models
+from account.models import Person
+
 
 # Create your models here.
 
 class Arterial(models.Model):
-
     SEX_LIST = (
         ('Мужчина', 'Мужчина'),
         ('Женщина', 'Женщина'),
@@ -24,6 +25,9 @@ class Arterial(models.Model):
     top_pressure = models.IntegerField(verbose_name="Верхнее давление")
     problem = models.BooleanField(verbose_name="Проблема?", default=False)
     fast_check = models.CharField(max_length=100, default='')
+
+    person = models.ForeignKey(Person, null=True, blank=True, on_delete=models.PROTECT, verbose_name='Профиль')
+
     status = models.ForeignKey('Status', null=True, blank=True, on_delete=models.PROTECT, verbose_name='Оценка')
 
     def __str__(self):
@@ -33,8 +37,8 @@ class Arterial(models.Model):
         verbose_name = 'Артериальное давление'
         verbose_name_plural = 'Артериальное давление'
 
-class Status(models.Model):
 
+class Status(models.Model):
     STATUS_LIST = (
         ('problem', 'проблема'),
         ('normally', 'в пределах нормы'),
