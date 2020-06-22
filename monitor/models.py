@@ -12,12 +12,11 @@ class Arterial(models.Model):
     age = models.CharField(max_length=3, verbose_name="Возраст", default="45")
     bottom_pressure = models.IntegerField(verbose_name="Нижнее давление", default="80")
     top_pressure = models.IntegerField(verbose_name="Верхнее давление", default="120")
-    problem = models.BooleanField(verbose_name="Проблема?", default=False)
     fast_check = models.CharField(max_length=100, default='')
 
     person = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, verbose_name='Профиль')
 
-    status = models.ForeignKey('Status', null=True, blank=True, on_delete=models.PROTECT, verbose_name='Оценка')
+    # status = models.ForeignKey('Status', null=True, blank=True, on_delete=models.PROTECT, verbose_name='Оценка')
 
     def __str__(self):
         return self.name + " " + str(self.bottom_pressure) + " - " + str(self.top_pressure)

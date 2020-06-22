@@ -1,13 +1,3 @@
-def check(bottom, top):
-    result = False
-    if bottom < 80 or bottom > 100:
-        result = True
-    if top < 120 or top > 180:
-        result = True
-
-    return result
-
-
 # Класс для анализа артериального давления, информацию брал с сайта
 # https://yandex.ru/turbo/s/giperton.com/norma-arterialnogo-davleniya-u-cheloveka.html
 class ArterialCheck:
