@@ -1,32 +1,21 @@
 from django.db import models
-from account.models import Person
+# from account.models import Person
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 
 class Arterial(models.Model):
-    SEX_LIST = (
-        ('Мужчина', 'Мужчина'),
-        ('Женщина', 'Женщина'),
-    )
 
-    AGE_LIST = (
-        ('20', 'до 20'),
-        ('30', 'от 21 до 30'),
-        ('40', 'от 31 до 40'),
-        ('50', 'от 41 до 50'),
-        ('60', 'от 51 до 60'),
-        ('61', 'старше 60'),
-    )
-    name = models.CharField(max_length=10, verbose_name="Имя")
-    sex = models.CharField(max_length=7, choices=SEX_LIST, verbose_name="Пол")
-    age = models.CharField(max_length=2, choices=AGE_LIST, verbose_name="Возраст")
-    bottom_pressure = models.IntegerField(verbose_name="Нижнее давление")
-    top_pressure = models.IntegerField(verbose_name="Верхнее давление")
+    name = models.CharField(max_length=10, verbose_name="Имя", default="Владимир")
+    sex = models.CharField(max_length=7, verbose_name="Пол", default="Мужчина")
+    age = models.CharField(max_length=3, verbose_name="Возраст", default="45")
+    bottom_pressure = models.IntegerField(verbose_name="Нижнее давление", default="80")
+    top_pressure = models.IntegerField(verbose_name="Верхнее давление", default="120")
     problem = models.BooleanField(verbose_name="Проблема?", default=False)
     fast_check = models.CharField(max_length=100, default='')
 
-    person = models.ForeignKey(Person, null=True, blank=True, on_delete=models.PROTECT, verbose_name='Профиль')
+    person = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, verbose_name='Профиль')
 
     status = models.ForeignKey('Status', null=True, blank=True, on_delete=models.PROTECT, verbose_name='Оценка')
 

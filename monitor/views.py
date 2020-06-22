@@ -31,15 +31,18 @@ def bp(request):
     sex = person.sex
     today = date.today()
     dob = person.dob
+    user = request.user
+    print('!!!!!!!' + str(user) + str(type(user)))
     # Получаю текущий возраст в int
     age = today.year - dob.year
 
 
     if request.method == "POST":
         form = ArterialForm(request.POST)
+        print("!!!!!!!" + str(form.is_valid))
         if form.is_valid():
             arterial = form.save(commit=False)
-            arterial.person = person.pk
+            # arterial.person = user.pk
             arterial.name = name
             arterial.sex = sex
             arterial.age = age
