@@ -38,10 +38,11 @@ def bp(request):
 
     if request.method == "POST":
         form = ArterialForm(request.POST)
-        print("!!!!!!!" + str(form.is_valid))
         if form.is_valid():
 
             arterial = form.save(commit=False)
+
+            arterial.person = request.user
             arterial.name = name
             arterial.sex = sex
             arterial.age = age
@@ -51,14 +52,8 @@ def bp(request):
                                                 arterial.bottom_pressure)
             arterial.save()
 
-    # user = User.objects.get(pk=request.user.pk)
-    #
-    # pressure = user.arterial_set.all()
-
-    # pressure = Arterial.objects.all()
-    pressure = Arterial.objects.filter(name='Иосиф')
-    # print(str(user) + '!!!!!!!!!!!!!!' + str(pressure))
-    print('!!!!!!!!!!!!!!' + str(pressure))
+    pressure = Arterial.objects.filter(person=request.user)
+    print('!!!!!!!!!!' + str(pressure))
     form = ArterialForm()
     context = {'pressure': pressure,
                'form': form,
