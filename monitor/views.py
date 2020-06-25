@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from .models import Arterial
 from .forms import ArterialForm
-from .code import check, ArterialCheck
+from .code import ArterialCheck
 from account.models import Person
 from django.contrib.auth.decorators import login_required
 from datetime import date
+from django.contrib.auth.models import User
 
 
 # def index(request):
@@ -14,6 +15,7 @@ from datetime import date
 #                'form': form,
 #                }
 #     return render(request, 'monitor/index.html', context)
+
 @login_required
 def index(request):
     person = Person.objects.get(user=request.user)
@@ -37,18 +39,21 @@ def bp(request):
     if request.method == "POST":
         form = ArterialForm(request.POST)
         if form.is_valid():
+
             arterial = form.save(commit=False)
+
+            arterial.person = request.user
             arterial.name = name
             arterial.sex = sex
             arterial.age = age
-            arterial.problem = check(arterial.bottom_pressure, arterial.top_pressure)
             a = ArterialCheck()
 
             arterial.fast_check = a.final_check(arterial.sex, arterial.age, arterial.top_pressure,
                                                 arterial.bottom_pressure)
             arterial.save()
 
-    pressure = Arterial.objects.all()
+    pressure = Arterial.objects.filter(person=request.user)
+    print('!!!!!!!!!!' + str(pressure))
     form = ArterialForm()
     context = {'pressure': pressure,
                'form': form,
