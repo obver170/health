@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from .models import Arterial
 from .forms import ArterialForm
-from .code import ArterialCheck
+from .code.arterial_pressure import ArterialCheck
 from account.models import Person
 from django.contrib.auth.decorators import login_required
 from datetime import date
-from django.contrib.auth.models import User
 
 
 # def index(request):
