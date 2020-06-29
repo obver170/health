@@ -19,7 +19,7 @@ from datetime import date
 def index(request):
     person = Person.objects.get(user=request.user)
     context = {
-        'person': person
+        'person': person,
     }
     return render(request, 'monitor/index.html', context)
 
@@ -27,13 +27,11 @@ def index(request):
 @login_required
 def bp(request):
     person = Person.objects.get(user=request.user)
-    name = person.name
-    sex = person.sex
+
+    # Получаю текущий возраст в int
     today = date.today()
     dob = person.dob
-    # Получаю текущий возраст в int
     age = today.year - dob.year
-
 
     if request.method == "POST":
         form = ArterialForm(request.POST)
@@ -42,8 +40,8 @@ def bp(request):
             arterial = form.save(commit=False)
 
             arterial.person = request.user
-            arterial.name = name
-            arterial.sex = sex
+            arterial.name = person.name
+            arterial.sex = person.sex
             arterial.age = age
             a = ArterialCheck()
 

@@ -125,3 +125,6 @@ STATIC_URL = '/static/'
 LOGIN_URL = 'account:login'
 LOGOUT_REDIRECT_URL = 'account:login'
 LOGIN_REDIRECT_URL = 'monitor:index'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
