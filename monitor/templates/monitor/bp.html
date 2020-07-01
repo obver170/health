@@ -5,32 +5,44 @@
 {% block title %} Артериальное давление {% endblock %}
 
 {% block content %}
-    <h1>Артериальное давление</h1>
-    <p> {{person}} </p>
-    <p> {{person_data.values}} </p>
-    <p> {{age}} </p>
-    {% for pr in pressure %}
-        <p> Имя: <b>{{ pr.name }}</b>,
-            дата обследования: {{pr.date}}
-            пол: {{pr.sex}},
-            возраст: {{pr.age}}
-            верхнее давление: {{pr.top_pressure}}
-            нижнее давление: {{pr.bottom_pressure}}
-            быстрый диагноз: {{pr.fast_check}}
-        </p>
-    {% endfor %}
+    <div class="display-4 pb-5">Артериальное давление</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3> {{pr.date}} </h3>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Дата обследования</th>
+                    <th>Верхнее давление</th>
+                    <th>Нижнее давление</th>
+                    <th>Быстрый диагноз</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for pr in pressure %}
+                  <tr>
+                    <td>{{pr.date}}</td>
+                    <td>{{pr.top_pressure}}</td>
+                    <td>{{pr.bottom_pressure}}</td>
+                    <td>{{pr.fast_check}}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
 
-    <div class="container-fluid">
-             <div class="row">
-                <div class="col-sm-12 ml-auto mt-2 pt-2 mr-auto " >
-                  <h3>Артериальное давление</h3>
-                    <form method="post">
-                        {% csrf_token %}
-                        {% bootstrap_form form layout='vertical'%}
-                        {% buttons submit='Добавить' %} {% endbuttons %}
-                    </form>
-                </div>
-             </div>
         </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-4 ml-auto mt-2 pt-2 mr-auto " >
+            <h4>Внести результаты обследования</h4>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout='vertical'%}
+                {% buttons submit='Добавить' %} {% endbuttons %}
+            </form>
+        </div>
+        <div class="col-sm-8"></div>
+        </div>
+
 
 {% endblock %}

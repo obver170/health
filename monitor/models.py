@@ -14,6 +14,7 @@ class Arterial(models.Model):
     top_pressure = models.IntegerField(verbose_name="Верхнее давление", default="120")
     fast_check = models.CharField(max_length=100, default='')
     date = models.DateTimeField(auto_now=True)
+    problem = models.BooleanField(verbose_name="Проблема?", default=False)
 
     person = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Профиль', default=1)
 

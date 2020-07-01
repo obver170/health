@@ -7,19 +7,17 @@ from django.contrib.auth.decorators import login_required
 from datetime import date
 
 
-# def index(request):
-#     pressure = Arterial.objects.all()
-#     form = ArterialForm()
-#     context = {'pressure': pressure,
-#                'form': form,
-#                }
-#     return render(request, 'monitor/index.html', context)
 
 @login_required
 def index(request):
     person = Person.objects.get(user=request.user)
+
+    today = date.today()
+    age = today.year - person.dob.year
+
     context = {
         'person': person,
+        'age':age,
     }
     return render(request, 'monitor/index.html', context)
 
@@ -38,7 +36,6 @@ def bp(request):
         if form.is_valid():
 
             arterial = form.save(commit=False)
-
             arterial.person = request.user
             arterial.name = person.name
             arterial.sex = person.sex
@@ -50,7 +47,6 @@ def bp(request):
             arterial.save()
 
     pressure = Arterial.objects.filter(person=request.user)
-    print('!!!!!!!!!!' + str(pressure))
     form = ArterialForm()
     context = {'pressure': pressure,
                'form': form,

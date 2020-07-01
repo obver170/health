@@ -4,28 +4,33 @@
 {% block account %}
 
 <div class="col-sm-2">
-    <h2>About Me</h2>
-    <h5>Photo of me:</h5>
     <div> <img src="{{person.photo.url}}" alt="Картинка" width="270" height="270"></div>
-    <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-    <h3>Some Links</h3>
-    <p>Lorem ipsum dolor sit ame.</p>
-    <ul class="nav nav-pills flex-column">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-    </ul>
+    <table class="table">
+    <tbody>
+      <tr>
+        <td>Фамилия</td>
+        <td>{{person.surname}}</td>
+      </tr>
+      <tr>
+        <td>Имя</td>
+        <td>{{person.name}}</td>
+      </tr>
+      <tr>
+        <td>Отчество</td>
+        <td>{{person.patronymic}}</td>
+      </tr>
+      <tr>
+        <td>Возраст</td>
+        <td>{{age}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
     <hr class="d-sm-none">
-</div> <div class="col-sm-10">
+</div>
+<div class="col-sm-10">
     {% block content %} {% endblock %}
 </div>
 
