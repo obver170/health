@@ -26,7 +26,10 @@
         </div>
 
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <a class="navbar-brand" href="{% url 'monitor:index' %}">Профиль</a>
+<!--            <a class="navbar-brand" href="{% url 'monitor:index' %}">Профиль</a>-->
+            <a class="navbar-brand" href="{% url 'monitor:index' %}">
+                <img src="{% static 'monitor/h1.png' %}" alt="Логотип" width="60" height="60">
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
