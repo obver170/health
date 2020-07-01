@@ -42,8 +42,12 @@ def bp(request):
             arterial.age = age
             a = ArterialCheck()
 
-            arterial.fast_check = a.final_check(arterial.sex, arterial.age, arterial.top_pressure,
+            check = a.final_check(arterial.sex, arterial.age, arterial.top_pressure,
                                                 arterial.bottom_pressure)
+
+            arterial.problem = check.get('problem')
+            print(arterial.problem)
+            arterial.fast_check = check.get('diagnosis')
             arterial.save()
 
     pressure = Arterial.objects.filter(person=request.user)

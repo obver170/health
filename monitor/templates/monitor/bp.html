@@ -24,7 +24,11 @@
                     <td>{{pr.date}}</td>
                     <td>{{pr.top_pressure}}</td>
                     <td>{{pr.bottom_pressure}}</td>
-                    <td>{{pr.fast_check}}</td>
+                      {% if pr.problem %}
+                        <td><span class="badge badge-pill badge-warning">{{pr.fast_check}}</span></td>
+                      {% else %}
+                        <td><span class="badge badge-pill badge-success">{{pr.fast_check}}</span></td>
+                        {% endif %}
                   </tr>
                 {% endfor %}
                 </tbody>

@@ -71,17 +71,19 @@ class ArterialCheck:
 
     # Служебный метод, проверяет вхождение текущего давления в безопасный диапазон, диагностирует Гипертонию и Гипотонию
     def arterial_check(self, t_press, t_normal, b_press, b_normal):
-        result ='Артериальное давление в норме'
+        result ={'problem': False, 'diagnosis': 'Артериальное давление в норме'}
         t_safe_range = self.safe_range('top', t_normal)
         b_safe_range = self.safe_range('bottom', b_normal)
         if t_press in t_safe_range and b_press in b_safe_range:
             return result
         else:
-            result = 'Обнаруженны проблемы с артериальным давлением'
+            result = {'problem': True, 'diagnosis': 'Обнаруженны проблемы с артериальным давлением'}
             if t_press > t_safe_range[-1] or b_press > b_safe_range[-1]:
-                result = 'Обнаруженны проблемы с артериальным давлением. Предполагается гипертония'
+                result = {'problem': True,
+                          'diagnosis': 'Обнаруженны проблемы с артериальным давлением. Предполагается гипертония'}
             if t_press < t_safe_range[0] or b_press < b_safe_range[0]:
-                result = 'Обнаруженны проблемы с артериальным давлением. Предполагается гипотония'
+                result = {'problem': True,
+                          'diagnosis': 'Обнаруженны проблемы с артериальным давлением. Предполагается гипотония'}
         return result
 
     # служебный метод, возвращает диапазон безопасного значения АД в зависимости от того верхнее оно или нижнее
