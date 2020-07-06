@@ -12,6 +12,7 @@ from datetime import date
 def index(request):
     person = Person.objects.get(user=request.user)
 
+    # Получаю текущий возраст в int
     today = date.today()
     age = today.year - person.dob.year
 
@@ -21,9 +22,37 @@ def index(request):
     }
     return render(request, 'monitor/index.html', context)
 
+@login_required
+def get_articles(request):
+    person = Person.objects.get(user=request.user)
+
+    # Получаю текущий возраст в int
+    today = date.today()
+    age = today.year - person.dob.year
+
+    context = {
+        'person': person,
+        'age': age,
+    }
+    return render(request, 'monitor/articles.html', context)
 
 @login_required
-def bp(request):
+def get_blood(request):
+    person = Person.objects.get(user=request.user)
+
+    # Получаю текущий возраст в int
+    today = date.today()
+    age = today.year - person.dob.year
+
+    context = {
+        'person': person,
+        'age': age,
+    }
+    return render(request, 'monitor/blood.html', context)
+
+
+@login_required
+def get_bp(request):
     person = Person.objects.get(user=request.user)
 
     # Получаю текущий возраст в int
