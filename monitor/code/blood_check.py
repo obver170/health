@@ -3,6 +3,23 @@
 
 
 class BloodCheck:
+
+    def __init__(self, sex='', rbc=4.1, mcv=81, mch=26, mchc=31, rfv=11.3, hgb=128, hct=40, cp=0.8,
+                 plt=178, esr=2, mpv=8, wbc=4):
+        self.sex = sex
+        self.rbc = rbc
+        self.mcv = mcv
+        self.mch = mch
+        self.mchc = mchc
+        self.rfv = rfv
+        self.hgb = hgb
+        self.hct = hct
+        self.cp = cp
+        self.plt = plt
+        self.esr = esr
+        self.mpv = mpv
+        self.wbc = wbc
+
     # Эритроциты (× 10х12/л)
     M_RBC = [4.1, 5.2]
     W_RBC = [3.6, 4.6]
@@ -89,13 +106,12 @@ class BloodCheck:
                 "гнойные воспалительные заболевания", "полученные тяжелые ожоги", "применение гормона инсулина",
                 "злокачественные опухоли в организме", "эпилепсия", "сильное отравление", "аллергические реакции"]
     # Лейкопения
-    under_WBC = ["цирроз печени", "системная красная волчанка", "лимфогрануломатоз", "лейкоз", "гипоплазия костного мозга",
-                 "прием некоторых лекарственных препаратов", "лучевая болезнь", "гепатит", "малярия", "акромегалия", "корь"]
+    under_WBC = ["цирроз печени", "системная красная волчанка", "лимфогрануломатоз", "лейкоз",
+                 "гипоплазия костного мозга", "прием некоторых лекарственных препаратов",
+                 "лучевая болезнь", "гепатит", "малярия", "акромегалия", "корь"]
 
     # Ретикулоциты (%)
     RET = [0.4, 1.3]
-
-
 
     # Проверка общего анализа крови в зависимости от пола
     def blood_check(self, sex, mch, mchc, rfv, cp, plt, mpv, wbc):
@@ -103,110 +119,111 @@ class BloodCheck:
 
         return result
 
-
     # Проверка ESR
-    def check_ESR(self, sex, esr):
+    def check_ESR(self):
         result = []
-        if sex == 'Мужчина':
-            if esr > self.M_ESR[1]:
+        if self.sex == 'Мужчина':
+            if self.esr > self.M_ESR[1]:
                 result = self.over_ESR
-            elif esr < self.M_ESR[0]:
+            elif self.esr < self.M_ESR[0]:
                 result = self.under_ESR
         else:
-            if esr > self.W_ESR[1]:
+            if self.esr > self.W_ESR[1]:
                 result = self.over_ESR
-            elif esr < self.W_ESR[0]:
+            elif self.esr < self.W_ESR[0]:
                 result = self.under_ESR
 
         return result
 
     # Проверка HCT
-    def check_HCT(self, sex, hct):
+    def check_HCT(self):
         result = []
-        if sex == 'Мужчина':
-            if hct > self.M_HCT[1]:
+        if self.sex == 'Мужчина':
+            if self.hct > self.M_HCT[1]:
                 result = self.over_HCT
-            elif hct < self.M_HCT[0]:
+            elif self.hct < self.M_HCT[0]:
                 result = self.under_HCT
         else:
-            if hct > self.W_HGB[1]:
+            if self.hct > self.W_HGB[1]:
                 result = self.over_CP
-            elif hct < self.W_HGB[0]:
+            elif self.hct < self.W_HGB[0]:
                 result = self.under_CP
 
         return result
 
     # Проверка HGB
-    def check_HGB(self, sex, hgb):
+    def check_HGB(self):
         result = []
-        if sex == 'Мужчина':
-            if hgb > self.M_HGB[1]:
+        if self.sex == 'Мужчина':
+            if self.hgb > self.M_HGB[1]:
                 result = self.over_CP
-            elif hgb < self.M_HGB[0]:
+            elif self.hgb < self.M_HGB[0]:
                 result = self.under_CP
         else:
-            if hgb > self.W_HGB[1]:
+            if self.hgb > self.W_HGB[1]:
                 result = self.over_CP
-            elif hgb < self.W_HGB[0]:
+            elif self.hgb < self.W_HGB[0]:
                 result = self.under_CP
 
         return result
 
     # Проверка RBC
-    def check_RBC(self, sex, rbc, mcv, mch, mchc, rfv):
+    def check_RBC(self):
         result = []
-        if sex == 'Мужчина':
-            if mch > self.MCH[1] or mchc > self.MCHC[1] or rfv > self.RFV[1] or rbc > self.M_RBC[1] or mcv > self.M_MCV[1]:
+        if self.sex == 'Мужчина':
+            if (self.mch > self.MCH[1] or self.mchc > self.MCHC[1] or self.rfv > self.RFV[1]
+                    or self.rbc > self.M_RBC[1] or self.mcv > self.M_MCV[1]):
                 result = self.over_RBC
-            elif mch < self.MCH[0] or mchc < self.MCHC[0] or rfv < self.RFV[0] or rbc < self.M_RBC[0] or mcv < self.M_MCV[0]:
+            elif (self.mch < self.MCH[0] or self.mchc < self.MCHC[0] or self.rfv < self.RFV[0]
+                  or self.rbc < self.M_RBC[0] or self.mcv < self.M_MCV[0]):
                 result = self.under_RBC
         else:
-            if mch > self.MCH[1] or mchc > self.MCHC[1] or rfv > self.RFV[1] or rbc > self.W_RBC[1] or mcv > self.W_MCV[1]:
+            if (self.mch > self.MCH[1] or self.mchc > self.MCHC[1] or self.rfv > self.RFV[1]
+                    or self.rbc > self.W_RBC[1] or self.mcv > self.W_MCV[1]):
                 result = self.over_RBC
-            elif mch < self.MCH[0] or mchc < self.MCHC[0] or rfv < self.RFV[0] or rbc < self.W_RBC[0] or mcv < self.W_MCV[0]:
+            elif (self.mch < self.MCH[0] or self.mchc < self.MCHC[0] or self.rfv < self.RFV[0]
+                  or self.rbc < self.W_RBC[0] or self.mcv < self.W_MCV[0]):
                 result = self.under_RBC
 
         return result
 
     # Проверка CP
-    def check_CP(self, cp):
+    def check_CP(self):
         result = []
-        if cp > self.CP[1]:
+        if self.cp > self.CP[1]:
             result = self.over_CP
-        elif cp < self.CP[0]:
+        elif self.cp < self.CP[0]:
             result = self.under_CP
         return result
 
     # Проверка PLT
-    def check_PLT(self, plt):
+    def check_PLT(self):
         result = []
-        if plt > self.PLT[1]:
+        if self.plt > self.PLT[1]:
             result = self.over_PLT
-        elif plt < self.PLT[0]:
+        elif self.plt < self.PLT[0]:
             result = self.under_PLT
         return result
 
     # Проверка MPV
-    def check_MPV(self, mpv):
+    def check_MPV(self):
         result = []
-        if mpv > self.MPV[1]:
+        if self.mpv > self.MPV[1]:
             result = self.over_MPV
-        elif mpv < self.MPV[0]:
+        elif self.mpv < self.MPV[0]:
             result = self.under_MPV
         return result
 
     # Проверка WBC
-    def check_WBC(self, wbc):
+    def check_WBC(self):
         result = []
-        if wbc > self.WBC[1]:
+        if self.wbc > self.WBC[1]:
             result = self.over_WBC
-        elif wbc < self.WBC[0]:
+        elif self.wbc < self.WBC[0]:
             result = self.under_WBC
         return result
 
-    # if M_HCT[0] <= 43.0 <= M_HCT[1]:
-    #     print('Внутри')
-
 
 bc = BloodCheck()
-print (bc.check_WBC(6))
+bc.wbc = 5
+print(bc.check_WBC())
