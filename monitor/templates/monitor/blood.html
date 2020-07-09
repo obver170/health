@@ -7,9 +7,102 @@
 
 
 {% block content %}
-    <h1>Общий анализ крови</h1>
-    <p>Архив и расшифровка анализа крови пациента</p>
+    <div class="display-4 pb-5">Общий анализ крови</div>
+    <div class="row">
+        <div class="col-sm-6">
+            {% for b in bloods %}
+                <p> <mark> {{b.date}}</mark> -
+                   {% if b.problem %}
+                        <span class="badge badge-pill badge-warning"> Выявлены проблемы </span>
+                    {% else %}
+                        <span class="badge badge-pill badge-success">Проблемы не выявлены</span>
+                    {% endif %}
+                </p>
+                <table class="table table-dark table-hover">
+                    <thead>
+                      <tr>
+                        <th>Показатель</th>
+                        <th>Значение</th>
+                      </tr>
+                    </thead>
+                    <tbody>
 
+                    <tr>
+                        <td>Эритроциты (× 10х12/л)</td>
+                        <td>{{b.RBC}}</td>
+                    </tr>
+                    <tr>
+                        <td>Средний объем эритроцитов (фл или мкм3)</td>
+                        <td>{{b.MCV}}</td>
+                      </tr>
+                    <tr>
+                        <td>Средний уровень HGB в эритроците (пг)</td>
+                        <td>{{b.MCH}}</td>
+                    </tr>
+                    <tr>
+                        <td>Средняя концентрация эритроцитов в гемоглобине (%)</td>
+                        <td>{{b.MCHC}}</td>
+                      </tr>
+                    <tr>
+                        <td>Анизоцитоз эритроцитов (%)</td>
+                        <td>{{b.RFV}}</td>
+                    </tr>
+                    <tr>
+                        <td>Гемоглобин (г/л)</td>
+                        <td>{{b.HGB}}</td>
+                      </tr>
+                    <tr>
+                        <td>Гематокрит (в % соотношении)</td>
+                        <td>{{b.HCT}}</td>
+                    </tr>
+                    <tr>
+                        <td>Цветной показатель</td>
+                        <td>{{b.CP}}</td>
+                    </tr>
+                    <tr>
+                        <td>Тромбоциты (× 10х9/л)</td>
+                        <td>{{b.PLT}}</td>
+                    </tr>
+                    <tr>
+                        <td>СОЭ (мм/ч)</td>
+                        <td>{{b.ESR}}</td>
+                    </tr>
+                    <tr>
+                        <td>Средний объем тромбоцитов (фл или мкм3)</td>
+                        <td>{{b.MPV}}</td>
+                    </tr>
+                    <tr>
+                        <td>Лейкоциты (× 10х9/л)</td>
+                        <td>{{b.WBC}}</td>
+                    </tr>
 
+                    </tbody>
+                </table>
+                <p>
+                    {% if b.problem %}
+                        <span> Проблемные показатели анализа бывают в следующих случаях: </span>
+                        <p>{{b.fast_check}}</p>
+<!--                        {% for t in b.fast_check %}-->
+<!--                            <p>{{t}}</p>-->
+<!--                        {% endfor %}-->
+                    {% else %}
+                        <span>Результаты показателей анализа в пределах нормы</span>
+                    {% endif %}
+
+                </p>
+            <br>
+
+            {% endfor %}
+
+        </div>
+        <div class="col-sm-4">
+            <h4>Внести результаты обследования</h4>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout='vertical'%}
+                {% buttons submit='Добавить' %} {% endbuttons %}
+            </form>
+        </div>
+    </div>
 
 {% endblock %}

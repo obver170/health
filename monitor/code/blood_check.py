@@ -4,8 +4,8 @@
 
 class BloodCheck:
 
-    def __init__(self, sex='', rbc=4.1, mcv=81, mch=26, mchc=31, rfv=11.3, hgb=128, hct=40, cp=0.8,
-                 plt=178, esr=2, mpv=8, wbc=4):
+    def __init__(self, sex='Мужчина', rbc=4.1, mcv=81.0, mch=26.0, mchc=31.0, rfv=11.4, hgb=128.0, hct=40.0, cp=0.9,
+                 plt=178.0, esr=2.0, mpv=8.0, wbc=4.0):
         self.sex = sex
         self.rbc = rbc
         self.mcv = mcv
@@ -114,8 +114,35 @@ class BloodCheck:
     RET = [0.4, 1.3]
 
     # Проверка общего анализа крови в зависимости от пола
-    def blood_check(self, sex, mch, mchc, rfv, cp, plt, mpv, wbc):
+    def get_blood_check(self):
         result = []
+
+        ch_ESR = self.check_ESR()
+        result.extend(ch_ESR)
+
+        ch_HCT = self.check_HCT()
+        result.extend(ch_HCT)
+
+        ch_HGB = self.check_HGB()
+        result.extend(ch_HGB)
+
+        ch_RBC = self.check_RBC()
+        result.extend(ch_RBC)
+
+        ch_CP = self.check_CP()
+        result.extend(ch_CP)
+
+        ch_PLT = self.check_PLT()
+        result.extend(ch_PLT)
+
+        ch_MPV = self.check_MPV()
+        result.extend(ch_MPV)
+
+        ch_WBC = self.check_WBC()
+        result.extend(ch_WBC)
+
+        if result == []:
+            result = ['Общий анализ крови проблем не выявил']
 
         return result
 
@@ -224,6 +251,6 @@ class BloodCheck:
         return result
 
 
-bc = BloodCheck()
-bc.wbc = 5
-print(bc.check_WBC())
+# bc = BloodCheck()
+# print(bc.get_blood_check())
+
