@@ -29,51 +29,109 @@
 
                     <tr>
                         <td>Эритроциты (× 10х12/л)</td>
-                        <td>{{b.RBC}}</td>
+                        {% if b.problem_RBC %}
+                            <td class="text-danger">{{b.RBC}}</td>
+                        {% else %}
+                            <td>{{b.RBC}}</td>
+                        {% endif %}
                     </tr>
+
                     <tr>
                         <td>Средний объем эритроцитов (фл или мкм3)</td>
-                        <td>{{b.MCV}}</td>
+                        {% if b.problem_MCV %}
+                            <td class="text-danger">{{b.MCV}}</td>
+                        {% else %}
+                            <td>{{b.MCV}}</td>
+                        {% endif %}
                       </tr>
+
                     <tr>
                         <td>Средний уровень HGB в эритроците (пг)</td>
-                        <td>{{b.MCH}}</td>
+                        {% if b.problem_MCH %}
+                            <td class="text-danger">{{b.MCH}}</td>
+                        {% else %}
+                            <td>{{b.MCH}}</td>
+                        {% endif %}
                     </tr>
+
                     <tr>
                         <td>Средняя концентрация эритроцитов в гемоглобине (%)</td>
-                        <td>{{b.MCHC}}</td>
+                        {% if b.problem_MCHC %}
+                            <td class="text-danger">{{b.MCHC}}</td>
+                        {% else %}
+                            <td>{{b.MCHC}}</td>
+                        {% endif %}
                       </tr>
                     <tr>
                         <td>Анизоцитоз эритроцитов (%)</td>
-                        <td>{{b.RFV}}</td>
+                        {% if b.problem_RFV %}
+                            <td class="text-danger">{{b.RFV}}</td>
+                        {% else %}
+                            <td>{{b.RFV}}</td>
+                        {% endif %}
                     </tr>
+
                     <tr>
                         <td>Гемоглобин (г/л)</td>
-                        <td>{{b.HGB}}</td>
+                        {% if b.problem_HGB %}
+                            <td class="text-danger">{{b.HGB}}</td>
+                        {% else %}
+                            <td>{{b.HGB}}</td>
+                        {% endif %}
                       </tr>
+
                     <tr>
                         <td>Гематокрит (в % соотношении)</td>
-                        <td>{{b.HCT}}</td>
+                        {% if b.problem_HCT %}
+                            <td class="text-danger">{{b.HCT}}</td>
+                        {% else %}
+                            <td>{{b.HCT}}</td>
+                        {% endif %}
                     </tr>
+
                     <tr>
                         <td>Цветной показатель</td>
-                        <td>{{b.CP}}</td>
+                        {% if b.problem_CP %}
+                            <td class="text-danger">{{b.CP}}</td>
+                        {% else %}
+                            <td>{{b.CP}}</td>
+                        {% endif %}
                     </tr>
+
                     <tr>
                         <td>Тромбоциты (× 10х9/л)</td>
-                        <td>{{b.PLT}}</td>
+                        {% if b.problem_PLT %}
+                            <td class="text-danger">{{b.PLT}}</td>
+                        {% else %}
+                            <td>{{b.PLT}}</td>
+                        {% endif %}
                     </tr>
+
                     <tr>
                         <td>СОЭ (мм/ч)</td>
-                        <td>{{b.ESR}}</td>
+                        {% if b.problem_ESR %}
+                            <td class="text-danger">{{b.ESR}}</td>
+                        {% else %}
+                            <td>{{b.ESR}}</td>
+                        {% endif %}
                     </tr>
+
                     <tr>
                         <td>Средний объем тромбоцитов (фл или мкм3)</td>
-                        <td>{{b.MPV}}</td>
+                        {% if b.problem_MPV %}
+                            <td class="text-danger">{{b.MPV}}</td>
+                        {% else %}
+                            <td>{{b.MPV}}</td>
+                        {% endif %}
                     </tr>
+
                     <tr>
                         <td>Лейкоциты (× 10х9/л)</td>
-                        <td>{{b.WBC}}</td>
+                        {% if b.problem_WBC %}
+                            <td class="text-danger">{{b.WBC}}</td>
+                        {% else %}
+                            <td>{{b.WBC}}</td>
+                        {% endif %}
                     </tr>
 
                     </tbody>
@@ -86,7 +144,7 @@
 <!--                            <p>{{t}}</p>-->
 <!--                        {% endfor %}-->
                     {% else %}
-                        <span>Результаты показателей анализа в пределах нормы</span>
+                        <span>Результаты показателей общего анализа крови находятся в пределах нормы</span>
                     {% endif %}
 
                 </p>

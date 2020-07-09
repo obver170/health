@@ -38,24 +38,46 @@ class Blood(models.Model):
     date = models.DateTimeField(auto_now=True)
 
     RBC = models.DecimalField(verbose_name="Эритроциты (× 10х12/л)", default="4.1", max_digits=5, decimal_places=2)
+    problem_RBC = models.BooleanField(default=False)
+
     MCV = models.DecimalField(verbose_name="Средний объем эритроцитов (фл или мкм3)",
                               default="81.0", max_digits=5, decimal_places=2)
+    problem_MCV = models.BooleanField(default=False)
+
     MCH = models.DecimalField(verbose_name="Средний уровень HGB в эритроците (пг)",
                               default="26.0", max_digits=5, decimal_places=2)
+    problem_MCH = models.BooleanField(default=False)
+
     MCHC = models.DecimalField(verbose_name="Средняя концентрация эритроцитов в гемоглобине (%)",
                                default="31.0", max_digits=5, decimal_places=2)
+    problem_MCHC = models.BooleanField(default=False)
+
     RFV = models.DecimalField(verbose_name="Анизоцитоз эритроцитов (%)",
                               default="11.4", max_digits=5, decimal_places=2)
+    problem_RFV = models.BooleanField(default=False)
 
     HGB = models.DecimalField(verbose_name="Гемоглобин (г/л)", default="128.0", max_digits=5, decimal_places=2)
+    problem_HGB = models.BooleanField(default=False)
+
     HCT = models.DecimalField(verbose_name="Гематокрит (в % соотношении)",
                               default="40.0", max_digits=5, decimal_places=2)
+    problem_HCT = models.BooleanField(default=False)
+
     CP = models.DecimalField(verbose_name="Цветной показатель", default="0.9", max_digits=5, decimal_places=2)
+    problem_CP = models.BooleanField(default=False)
+
     PLT = models.DecimalField(verbose_name="Тромбоциты (× 10х9/л)", default="178.0", max_digits=5, decimal_places=2)
+    problem_PLT = models.BooleanField(default=False)
+
     ESR = models.DecimalField(verbose_name="СОЭ (мм/ч)", default="2.0", max_digits=5, decimal_places=2)
+    problem_ESR = models.BooleanField(default=False)
+
     MPV = models.DecimalField(verbose_name="Средний объем тромбоцитов (фл или мкм3)",
                               default="8.0", max_digits=5, decimal_places=2)
+    problem_MPV = models.BooleanField(default=False)
+
     WBC = models.DecimalField(verbose_name="Лейкоциты (× 10х9/л)", default="4.0", max_digits=5, decimal_places=2)
+    problem_WBC = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.pk) + " " + str(self.person) + " имеет проблемы? " + str(self.problem)
@@ -63,3 +85,4 @@ class Blood(models.Model):
     class Meta:
         verbose_name = 'Общий анализ крови'
         verbose_name_plural = 'Общий анализ крови'
+

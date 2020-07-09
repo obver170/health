@@ -115,139 +115,198 @@ class BloodCheck:
 
     # Проверка общего анализа крови в зависимости от пола
     def get_blood_check(self):
-        result = []
+        result = {}
 
         ch_ESR = self.check_ESR()
-        result.extend(ch_ESR)
+        if ch_ESR['problem']:
+
+            result['problem'] = True
+            result['check_ESR'] = ch_ESR['check']
+
 
         ch_HCT = self.check_HCT()
-        result.extend(ch_HCT)
+        if ch_HCT['problem']:
+
+            result['problem'] = True
+            result['check_HCT'] = ch_HCT['check']
 
         ch_HGB = self.check_HGB()
-        result.extend(ch_HGB)
+        if ch_HGB['problem']:
+
+            result['problem'] = True
+            result['check_HGB'] = ch_HGB['check']
 
         ch_RBC = self.check_RBC()
-        result.extend(ch_RBC)
+        if ch_RBC['problem']:
+
+            result['problem'] = True
+            result['check_RBC'] = ch_RBC['check']
 
         ch_CP = self.check_CP()
-        result.extend(ch_CP)
+        if ch_CP['problem']:
+
+            result['problem'] = True
+            result['check_CP'] = ch_CP['check']
 
         ch_PLT = self.check_PLT()
-        result.extend(ch_PLT)
+        if ch_PLT['problem']:
+
+            result['problem'] = True
+            result['check_PLT'] = ch_PLT['check']
 
         ch_MPV = self.check_MPV()
-        result.extend(ch_MPV)
+        if ch_MPV['problem']:
+
+            result['problem'] = True
+            result['check_MPV'] = ch_MPV['check']
 
         ch_WBC = self.check_WBC()
-        result.extend(ch_WBC)
+        if ch_WBC['problem']:
 
-        if result == []:
-            result = ['Общий анализ крови проблем не выявил']
+            result['problem'] = True
+            result['check_WBC'] = ch_WBC['check']
+
+        if result == {}:
+            result = {
+                'problem': False,
+            }
 
         return result
 
     # Проверка ESR
     def check_ESR(self):
-        result = []
+        result = {'problem': False,
+                  'check': 'Показатель в пределах нормы'}
         if self.sex == 'Мужчина':
             if self.esr > self.M_ESR[1]:
-                result = self.over_ESR
+                result['problem'] = True
+                result['check'] = self.over_ESR
             elif self.esr < self.M_ESR[0]:
-                result = self.under_ESR
+                result['problem'] = True
+                result['check'] = self.under_ESR
         else:
             if self.esr > self.W_ESR[1]:
-                result = self.over_ESR
+                result['problem'] = True
+                result['check'] = self.over_ESR
             elif self.esr < self.W_ESR[0]:
-                result = self.under_ESR
+                result['problem'] = True
+                result['check'] = self.under_ESR
 
         return result
 
     # Проверка HCT
     def check_HCT(self):
-        result = []
+        result = {'problem': False,
+                  'check': 'Показатель в пределах нормы'}
         if self.sex == 'Мужчина':
             if self.hct > self.M_HCT[1]:
-                result = self.over_HCT
+                result['problem'] = True
+                result['check'] = self.over_HCT
             elif self.hct < self.M_HCT[0]:
-                result = self.under_HCT
+                result['problem'] = True
+                result['check'] = self.under_HCT
         else:
             if self.hct > self.W_HGB[1]:
-                result = self.over_CP
+                result['problem'] = True
+                result['check'] = self.over_CP
             elif self.hct < self.W_HGB[0]:
-                result = self.under_CP
+                result['problem'] = True
+                result['check'] = self.under_CP
 
         return result
 
     # Проверка HGB
     def check_HGB(self):
-        result = []
+        result = {'problem': False,
+                  'check': 'Показатель в пределах нормы'}
         if self.sex == 'Мужчина':
             if self.hgb > self.M_HGB[1]:
-                result = self.over_CP
+                result['problem'] = True
+                result['check'] = self.over_CP
             elif self.hgb < self.M_HGB[0]:
-                result = self.under_CP
+                result['problem'] = True
+                result['check'] = self.under_CP
         else:
             if self.hgb > self.W_HGB[1]:
-                result = self.over_CP
+                result['problem'] = True
+                result['check'] = self.over_CP
             elif self.hgb < self.W_HGB[0]:
-                result = self.under_CP
+                result['problem'] = True
+                result['check'] = self.under_CP
 
         return result
 
     # Проверка RBC
     def check_RBC(self):
-        result = []
+        result = {'problem': False,
+                  'check': 'Показатель в пределах нормы'}
         if self.sex == 'Мужчина':
             if (self.mch > self.MCH[1] or self.mchc > self.MCHC[1] or self.rfv > self.RFV[1]
                     or self.rbc > self.M_RBC[1] or self.mcv > self.M_MCV[1]):
-                result = self.over_RBC
+                result['problem'] = True
+                result['check'] = self.over_RBC
             elif (self.mch < self.MCH[0] or self.mchc < self.MCHC[0] or self.rfv < self.RFV[0]
                   or self.rbc < self.M_RBC[0] or self.mcv < self.M_MCV[0]):
-                result = self.under_RBC
+                result['problem'] = True
+                result['check'] = self.under_RBC
         else:
             if (self.mch > self.MCH[1] or self.mchc > self.MCHC[1] or self.rfv > self.RFV[1]
                     or self.rbc > self.W_RBC[1] or self.mcv > self.W_MCV[1]):
-                result = self.over_RBC
+                result['problem'] = True
+                result['check'] = self.over_RBC
             elif (self.mch < self.MCH[0] or self.mchc < self.MCHC[0] or self.rfv < self.RFV[0]
                   or self.rbc < self.W_RBC[0] or self.mcv < self.W_MCV[0]):
-                result = self.under_RBC
+                result['problem'] = True
+                result['check'] = self.under_RBC
 
         return result
 
     # Проверка CP
     def check_CP(self):
-        result = []
+        result = {'problem': False,
+                  'check': 'Показатель в пределах нормы'}
         if self.cp > self.CP[1]:
-            result = self.over_CP
+            result['problem'] = True
+            result['check'] = self.over_CP
         elif self.cp < self.CP[0]:
-            result = self.under_CP
+            result['problem'] = True
+            result['check'] = self.under_CP
         return result
 
     # Проверка PLT
     def check_PLT(self):
-        result = []
+        result = {'problem': False,
+                  'check': 'Показатель в пределах нормы'}
         if self.plt > self.PLT[1]:
-            result = self.over_PLT
+            result['problem'] = True
+            result['check'] = self.over_PLT
         elif self.plt < self.PLT[0]:
-            result = self.under_PLT
+            result['problem'] = True
+            result['check'] = self.under_PLT
         return result
 
     # Проверка MPV
     def check_MPV(self):
-        result = []
+        result = {'problem': False,
+                  'check': 'Показатель в пределах нормы'}
         if self.mpv > self.MPV[1]:
-            result = self.over_MPV
+            result['problem'] = True
+            result['check'] = self.over_MPV
         elif self.mpv < self.MPV[0]:
-            result = self.under_MPV
+            result['problem'] = True
+            result['check'] = self.under_MPV
         return result
 
     # Проверка WBC
     def check_WBC(self):
-        result = []
+        result = {'problem': False,
+                  'check': 'Показатель в пределах нормы'}
         if self.wbc > self.WBC[1]:
-            result = self.over_WBC
+            result['problem'] = True
+            result['check'] = self.over_WBC
         elif self.wbc < self.WBC[0]:
-            result = self.under_WBC
+            result['problem'] = True
+            result['check'] = self.under_WBC
         return result
 
 

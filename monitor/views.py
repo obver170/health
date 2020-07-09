@@ -99,10 +99,26 @@ def get_blood(request):
 
             check = b.get_blood_check()
 
-            if check == ['Общий анализ крови проблем не выявил']:
-                blood.problem = False
-            else:
-                blood.problem = True
+            blood.problem = check['problem']
+
+            if blood.problem:
+                if 'check_ESR' in check:
+                    blood.problem_ESR = True
+                if 'check_HCT' in check:
+                    blood.problem_HCT = True
+                if 'check_HGB' in check:
+                    blood.problem_HGB = True
+                if 'check_RBC' in check:
+                    blood.problem_RBC = True
+                if 'check_CP' in check:
+                    blood.problem_CP = True
+                if 'check_PLT' in check:
+                    blood.problem_PLT = True
+                if 'check_MPV' in check:
+                    blood.problem_MPV = True
+                if 'check_WBC' in check:
+                    blood.problem_WBC = True
+
 
             blood.fast_check = check
 
