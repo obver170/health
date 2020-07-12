@@ -2,11 +2,10 @@ from django.shortcuts import render
 from .models import Arterial, Blood
 from .forms import ArterialForm, BloodForm
 from .code.arterial_pressure import ArterialCheck
-from .code.blood_check import BloodCheck
+from .code.blood_check_v2 import BloodCheck
 from account.models import Person
 from django.contrib.auth.decorators import login_required
 from datetime import date
-
 
 
 @login_required
@@ -17,11 +16,18 @@ def index(request):
     today = date.today()
     age = today.year - person.dob.year
 
+    pressure = Arterial.objects.filter(person=request.user).last
+    blood = Blood.objects.filter(person=request.user).last
+
+
     context = {
         'person': person,
-        'age':age,
+        'age': age,
+        'pressure': pressure,
+        'blood': blood
     }
     return render(request, 'monitor/index.html', context)
+
 
 @login_required
 def get_articles(request):
@@ -38,8 +44,6 @@ def get_articles(request):
     return render(request, 'monitor/articles.html', context)
 
 
-
-
 @login_required
 def get_bp(request):
     person = Person.objects.get(user=request.user)
@@ -52,7 +56,6 @@ def get_bp(request):
     if request.method == "POST":
         form = ArterialForm(request.POST)
         if form.is_valid():
-
             arterial = form.save(commit=False)
             arterial.person = request.user
             arterial.name = person.name
@@ -61,7 +64,7 @@ def get_bp(request):
             a = ArterialCheck()
 
             check = a.final_check(arterial.sex, arterial.age, arterial.top_pressure,
-                                                arterial.bottom_pressure)
+                                  arterial.bottom_pressure)
 
             arterial.problem = check.get('problem')
             # print(arterial.problem)
@@ -77,6 +80,7 @@ def get_bp(request):
                }
 
     return render(request, 'monitor/bp.html', context)
+
 
 @login_required
 def get_blood(request):
@@ -102,29 +106,44 @@ def get_blood(request):
             blood.problem = check['problem']
 
             if blood.problem:
-                if 'check_ESR' in check:
-                    blood.problem_ESR = True
-                if 'check_HCT' in check:
-                    blood.problem_HCT = True
-                if 'check_HGB' in check:
-                    blood.problem_HGB = True
-                if 'check_RBC' in check:
+
+                marks = check['marks']
+                print(check)
+
+                print("!!!!!!" + str(marks))
+
+                if 'over_RBC' in marks or 'under_RBC' in marks:
                     blood.problem_RBC = True
-                if 'check_CP' in check:
+                if 'over_MCV' in marks or 'under_MCV' in marks:
+                    blood.problem_MCV = True
+                if 'over_MCH' in marks or 'under_MCH' in marks:
+                    blood.problem_MCH = True
+                if 'over_MCHC' in marks or 'under_MCHC' in marks:
+                    blood.problem_MCHC = True
+                if 'over_RFV' in marks or 'under_RFV' in marks:
+                    blood.problem_RFV = True
+
+                if 'over_ESR' in marks or 'under_ESR' in marks:
+                    blood.problem_ESR = True
+                if 'over_HCT' in marks or 'under_HCT' in marks:
+                    blood.problem_HCT = True
+                if 'over_HGB' in marks or 'under_HGB' in marks:
+                    blood.problem_HGB = True
+                if 'over_CP' in marks or 'under_CP' in marks:
                     blood.problem_CP = True
-                if 'check_PLT' in check:
+                if 'over_PLT' in marks or 'under_PLT' in marks:
                     blood.problem_PLT = True
-                if 'check_MPV' in check:
+                if 'over_MPV' in marks or 'under_MPV' in marks:
                     blood.problem_MPV = True
-                if 'check_WBC' in check:
+                if 'over_WBC' in marks or 'under_WBC' in marks:
                     blood.problem_WBC = True
 
-
-            blood.fast_check = check
+            # print("!!!!!!" + check['check'])
+            blood.fast_check = check['check']
 
             blood.save()
 
-    bloods = Blood.objects.filter(person=request.user)
+    bloods = Blood.objects.filter(person=request.user).order_by('-date')
     form = BloodForm()
 
     context = {

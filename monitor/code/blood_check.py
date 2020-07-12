@@ -310,6 +310,6 @@ class BloodCheck:
         return result
 
 
-# bc = BloodCheck()
+# bc = BloodCheck(mcv=1, mch=1)
 # print(bc.get_blood_check())
 

@@ -7,9 +7,43 @@
 
 
 {% block content %}
-    <h1>Монитор здоровья</h1>
-    <p> {{person}} </p>
-    <p>Актуальная информация о здоровье клиента</p>
+    <div class="display-4 pb-5">Монитор здоровья</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="font-weight-bold"> {% now "d.m.Y H:i" %} </p>
+            <hr>
+            <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <th>Дата</th>
+                    <th>Исследование</th>
+                    <th>Результат</th>
+                  </tr>
+                <tr>
+                    <td>{{pressure.date}}</td>
+                    <td>Артериальное давление</td>
+                    <td>{% if pressure.problem%}
+                            <a href="{% url 'monitor:bp' %}">Исследование выявило проблемы</a>
+                        {% else %}
+                            Показатели в пределах нормы
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{blood.date}}</td>
+                    <td>Общий анализ крови</td>
+                    <td>{% if blood.problem%}
+                        <a href="{% url 'monitor:blood' %}">Исследование выявило проблемы</a>
+                        {% else %}
+                            Показатели в пределах нормы
+                        {% endif %}
+                    </td>
+                </tr>
+                </thead>
+
+            </table>
+        </div>
+    </div>
 
 
 
