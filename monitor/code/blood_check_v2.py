@@ -411,9 +411,9 @@ class BloodCheck:
 # print(type(res['check']))
 
 
-s = 'кощей'
-print(s)
-print(type(s))
-s = s.encode('cp1251')
-print(s)
-print(type(s))
+# s = 'кощей'
+# print(s)
+# print(type(s))
+# s = s.encode('cp1251')
+# print(s)
+# print(type(s))
