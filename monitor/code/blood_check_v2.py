@@ -1,3 +1,5 @@
+# coding: utf8
+
 # Анализ крови
 # источник - https://yandex.ru/health/turbo/articles?id=3811
 
@@ -404,4 +406,14 @@ class BloodCheck:
         return result
 
 # bc = BloodCheck(mcv=1, mch=1)
-# print(bc.get_blood_check())
+# res = bc.get_blood_check()
+# print(res['check'])
+# print(type(res['check']))
+
+
+s = 'кощей'
+print(s)
+print(type(s))
+s = s.encode('cp1251')
+print(s)
+print(type(s))
