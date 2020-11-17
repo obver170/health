@@ -1,6 +1,9 @@
 from django.db import models
-from django.conf import settings
-from django.contrib.auth.models import User
+# Несмотря на подчеркивание красным, этот импорт работает и связывает модель Person из приложения account с текущим
+# приложением
+from account.models import Person
+# from django.conf import settings
+# from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -12,9 +15,10 @@ class Permission(models.Model):
         ('user', 'Пользователь'),
     )
     name_permission = models.CharField(max_length=7, choices=PERM_LIST, verbose_name="Права пользователя")
+    descripton_permission = models.CharField(max_length=100, verbose_name="Описание прав", blank=True)
 
     def __str__(self):
-        return str(self.pk) + " " + str(self.name_permission)
+        return str(self.name_permission)
 
     class Meta:
         verbose_name = 'Права сотрудника'
@@ -28,10 +32,10 @@ class Status(models.Model):
         ('dom', 'Руководитель'),
     )
     name_status = models.CharField(max_length=7, choices=STATUS_LIST, verbose_name="Статус пользователя")
-    permission = models.ForeignKey(Permission, on_delete=models.CASCADE)
+    descripton_status = models.CharField(max_length=100, verbose_name="Описание прав", blank=True)
 
     def __str__(self):
-        return str(self.pk) + " " + str(self.name_status)
+        return str(self.name_status)
 
     class Meta:
         verbose_name = 'Статус сотрудника'
@@ -43,35 +47,33 @@ class Departament_name(models.Model):
     name_departament = models.CharField(max_length=30, verbose_name="Название подразделения", unique=True)
 
     def __str__(self):
-        return str(self.pk) + " " + str(self.name_departament)
+        return str(self.name_departament)
 
     class Meta:
         verbose_name = 'Название подразделения'
         verbose_name_plural = 'Название подразделений'
 
 
-class List_dom(models.Model):
-    # Список вышестоящих подразделений
-    name_list = models.CharField(max_length=30, verbose_name="Название списка")
-    name_departament = models.ForeignKey(Departament_name, on_delete=models.CASCADE)
+class Rank(models.Model):
+    # Ранг подразделения. Чем выше, тем больше власти у подразделения
+    rank = models.SmallIntegerField(verbose_name="Ранг подразделения")
 
     def __str__(self):
-        return str(self.pk) + " " + str(self.name_list)
+        return str(self.rank)
 
     class Meta:
-        verbose_name = 'Список вышестоящих подразделений'
-        verbose_name_plural = 'Список вышестоящих подразделениях'
+        verbose_name = 'Ранг подразделения'
+        verbose_name_plural = 'Ранги подразделений'
 
 
-class Departament_info(models.Model):
+class Departament(models.Model):
     # Таблица с данными о подразделении
     name_departament = models.OneToOneField(Departament_name,
                                             on_delete=models.CASCADE, verbose_name="Название подразделения")
-    list_dom = models.OneToOneField(List_dom, on_delete=models.CASCADE,
-                                    verbose_name="Список начальствующих подразделений")
+    rank = models.ForeignKey(Rank, on_delete=models.CASCADE, verbose_name="Ранг подразделения")
 
     def __str__(self):
-        return str(self.pk) + " " + str(self.name_departament) + " подчиняется " + str(self.list_dom)
+        return str(self.name_departament) + ", ранг = " + str(self.rank)
 
     class Meta:
         verbose_name = 'Информация о подразделении'
@@ -123,20 +125,20 @@ class Week(models.Model):
     # Таблица с неделями в месяце
 
     WEEK_LIST = (
-        ('1', 'Первая'),
-        ('2', 'Вторая'),
-        ('3', 'Третья'),
-        ('4', 'Четвертая'),
-        ('5', 'Пятая'),
+        ('Первая', 'Первая'),
+        ('Вторая', 'Вторая'),
+        ('Третья', 'Третья'),
+        ('Четвертая', 'Четвертая'),
+        ('Пятая', 'Пятая'),
     )
 
     week = models.CharField(max_length=11, choices=WEEK_LIST, verbose_name="Неделя")
-    month = models.ForeignKey(Month, verbose_name="Неделя", on_delete=models.CASCADE)
+    month = models.ForeignKey(Month, verbose_name="Год и месяц", on_delete=models.CASCADE)
     date_start = models.SmallIntegerField(verbose_name="Дата начала недели")
     date_end = models.SmallIntegerField(verbose_name="Дата конца недели")
 
     def __str__(self):
-        return str(self.week) + str(self.month)
+        return str(self.week) + " неделя " + str(self.month)
 
     class Meta:
         verbose_name = 'Неделя'
@@ -171,13 +173,12 @@ class Type_overwork(models.Model):
 class Overwork(models.Model):
     # Переработка
     is_holiday = models.BooleanField(verbose_name="Во время праздника или выходного дня?", blank=False, default=False)
-    week = models.ForeignKey(Week, on_delete=models.CASCADE, verbose_name="К какой неделе относится?")
     type_overwork = models.ForeignKey(Type_overwork, on_delete=models.CASCADE, verbose_name="Тип переработки")
     amount_hour = models.ForeignKey(Amount_hour, on_delete=models.CASCADE, verbose_name="Количество часов")
     date = models.DateField(verbose_name="Дата переработки", default='1999-11-1', blank=False)
 
     def __str__(self):
-        return "Переработка: " + str(self.week) + " " + str(self.type_overwork) + str(self.amount_hour)
+        return "Переработка: " + " " + str(self.type_overwork) + str(self.amount_hour)
 
     class Meta:
         verbose_name = 'Переработка'
@@ -200,46 +201,49 @@ class Type_day_off(models.Model):
 class Day_off(models.Model):
     # Отгулы
     is_vacation = models.BooleanField(verbose_name="Присоединен к отпуску?", blank=False, default=False)
-    week = models.ForeignKey(Week, on_delete=models.CASCADE, verbose_name="К какой неделе относится?")
     type_overwork = models.ForeignKey(Type_day_off, on_delete=models.CASCADE, verbose_name="Тип отгула")
     amount_hour = models.ForeignKey(Amount_hour, on_delete=models.CASCADE, verbose_name="Количество часов")
     date = models.DateField(verbose_name="Дата отгула", default='1999-11-1', blank=False)
 
     def __str__(self):
-        return "Отгулы: " + str(self.week) + " " + str(self.type_overwork) + str(self.amount_hour)
+        return "Отгул: " + " " + str(self.type_overwork) + " " + str(self.amount_hour) + " ч."
 
     class Meta:
         verbose_name = 'Отгул'
         verbose_name_plural = 'Отгулы'
 
 
-class Account_week_work_time(models.Model):
-    # Сумма переработки и отгулов за неделю
-    overwork = models.ManyToManyField(Overwork, verbose_name="Переработка")
-    day_off = models.ManyToManyField(Day_off, verbose_name="Отгулы")
-
-    def __str__(self):
-        return "Отгулы: " + str(self.day_off) + " Переработка: " + str(self.overwork)
-
-    class Meta:
-        verbose_name = 'Сумма переработки и отгулов за неделю'
-        verbose_name_plural = 'Сумма переработки и отгулов за неделю'
-
-
 class Profile(models.Model):
     # Хранит информацию о сотруднике
-    name = models.CharField(max_length=20, verbose_name="Имя")
-    surname = models.CharField(max_length=20, verbose_name="Фамилия")
-    departament = models.ForeignKey(Departament_name, on_delete=models.CASCADE, verbose_name="Название подразделения")
+    # name = models.CharField(max_length=20, verbose_name="Имя")
+    # surname = models.CharField(max_length=20, verbose_name="Фамилия")
+    departament = models.ForeignKey(Departament, on_delete=models.CASCADE, verbose_name="Подразделение")
     status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name="Статус сотрудника")
-    account_week_work_time = models.ManyToManyField(Account_week_work_time, verbose_name="Учет времени за неделю")
+    permission = models.ForeignKey(Permission, on_delete=models.CASCADE, verbose_name="Права сотрудника", default=1)
+    person = models.OneToOneField(Person, on_delete=models.CASCADE, default=1)
 
     # profile = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Профиль', default=1)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    # user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return str(self.name) + " " + str(self.surname) + " " + str(self.departament)
+        # return str(self.name) + " " + str(self.surname) + " " + str(self.departament)
+        return str(self.person) + " " + str(self.departament)
 
     class Meta:
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
+
+
+class Account_week_work_time(models.Model):
+    # Сумма переработки и отгулов за неделю
+    overwork = models.ManyToManyField(Overwork, verbose_name="Переработка")
+    day_off = models.ManyToManyField(Day_off, verbose_name="Отгулы")
+    week = models.ForeignKey(Week, on_delete=models.CASCADE, verbose_name="К какой неделе относится?", default=1)
+    profile = models.ForeignKey(Profile, verbose_name="Сотрудник", on_delete=models.CASCADE, default=1)
+
+    def __str__(self):
+        return "Учет времени за  " + str(self.week) + ", " + str(self.profile)
+
+    class Meta:
+        verbose_name = 'Сумма переработки и отгулов за неделю'
+        verbose_name_plural = 'Сумма переработки и отгулов за неделю'
