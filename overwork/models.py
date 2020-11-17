@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 
 
@@ -233,7 +234,8 @@ class Profile(models.Model):
     status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name="Статус сотрудника")
     account_week_work_time = models.ManyToManyField(Account_week_work_time, verbose_name="Учет времени за неделю")
 
-    profile = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Профиль', default=1)
+    # profile = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Профиль', default=1)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return str(self.name) + " " + str(self.surname) + " " + str(self.departament)
