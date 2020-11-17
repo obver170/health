@@ -156,7 +156,6 @@ class Amount_hour(models.Model):
         verbose_name = 'Часы'
         verbose_name_plural = 'Часы'
 
-
 class Type_overwork(models.Model):
     # Тип переработки
     name_type = models.CharField(max_length=20, unique=True, verbose_name="Тип переработки")
@@ -172,10 +171,12 @@ class Type_overwork(models.Model):
 
 class Overwork(models.Model):
     # Переработка
-    is_holiday = models.BooleanField(verbose_name="Во время праздника или выходного дня?", blank=False, default=False)
+    is_holiday = models.BooleanField(verbose_name="Во время праздника или выходного дня?", blank=True, default=False)
     type_overwork = models.ForeignKey(Type_overwork, on_delete=models.CASCADE, verbose_name="Тип переработки")
     amount_hour = models.ForeignKey(Amount_hour, on_delete=models.CASCADE, verbose_name="Количество часов")
-    date = models.DateField(verbose_name="Дата переработки", default='1999-11-1', blank=False)
+    date = models.DateField(verbose_name="Дата переработки", default='1999-11-1', blank=True)
+    status = models.BooleanField(verbose_name="Проверена?", default=False)
+    is_True = models.BooleanField(verbose_name="Заявка верна?", default=False)
 
     def __str__(self):
         return "Переработка: " + " " + str(self.type_overwork) + str(self.amount_hour)
@@ -200,10 +201,12 @@ class Type_day_off(models.Model):
 
 class Day_off(models.Model):
     # Отгулы
-    is_vacation = models.BooleanField(verbose_name="Присоединен к отпуску?", blank=False, default=False)
+    is_vacation = models.BooleanField(verbose_name="Присоединен к отпуску?", blank=True, default=False)
     type_overwork = models.ForeignKey(Type_day_off, on_delete=models.CASCADE, verbose_name="Тип отгула")
     amount_hour = models.ForeignKey(Amount_hour, on_delete=models.CASCADE, verbose_name="Количество часов")
-    date = models.DateField(verbose_name="Дата отгула", default='1999-11-1', blank=False)
+    date = models.DateField(verbose_name="Дата отгула", default='1999-11-1', blank=True)
+    status = models.BooleanField(verbose_name="Проверена?", default=False)
+    is_True = models.BooleanField(verbose_name="Заявка верна?", default=False)
 
     def __str__(self):
         return "Отгул: " + " " + str(self.type_overwork) + " " + str(self.amount_hour) + " ч."
@@ -214,19 +217,17 @@ class Day_off(models.Model):
 
 
 class Profile(models.Model):
-    # Хранит информацию о сотруднике
-    # name = models.CharField(max_length=20, verbose_name="Имя")
-    # surname = models.CharField(max_length=20, verbose_name="Фамилия")
+    # Хранит информацию о сотруднике (дополняет Person из account)
+
     departament = models.ForeignKey(Departament, on_delete=models.CASCADE, verbose_name="Подразделение")
     status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name="Статус сотрудника")
     permission = models.ForeignKey(Permission, on_delete=models.CASCADE, verbose_name="Права сотрудника", default=1)
+
     person = models.OneToOneField(Person, on_delete=models.CASCADE, default=1)
 
-    # profile = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Профиль', default=1)
-    # user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+
 
     def __str__(self):
-        # return str(self.name) + " " + str(self.surname) + " " + str(self.departament)
         return str(self.person) + " " + str(self.departament)
 
     class Meta:
