@@ -119,7 +119,8 @@ STATIC_URL = '/static/'
 
 LOGIN_URL = 'account:login'
 LOGOUT_REDIRECT_URL = 'account:login'
-LOGIN_REDIRECT_URL = 'monitor:index'
+# LOGIN_REDIRECT_URL = 'monitor:index'
+LOGIN_REDIRECT_URL = 'overwork:dashboard'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

@@ -1,0 +1,87 @@
+{% load static %}
+{% load bootstrap4%}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title%}  {% endblock %}</title>
+        <meta charset="utf-8">
+<!--        <meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+
+    </head>
+    <body>
+
+
+        <div class="row bg-light text-dar" style="margin-bottom:0; text-align: center;">
+            <div class="col-sm-12">
+<!--                <img src="{% static 'overwork/unnamуed.png' %}" alt="Логотип" width="330" height="200">-->
+
+                <img src="{% static 'overwork/VS.svg.png' %}" alt="Логотип" width="330" height="200">
+            </div>
+            <div class="col-sm-12">
+                <h1 class="display-3">Док online</h1>
+                <h5 class="pb-3">Учёт рабочего времени сотрудников войсковой части</h5>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<!--            <a class="navbar-brand" href="{% url 'monitor:index' %}">Профиль</a>-->
+            <a class="navbar-brand" href="{% url 'overwork:dashboard' %}">
+                <img src="{% static 'overwork/logo.png' %}" alt="Логотип" width="60" height="60">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'overwork:dashboard' %}">Краткая статистика</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'overwork:add_overwork' %}">Добавить переработку</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'overwork:add_type_overwork' %}">Типы переработки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'overwork:add_day_off' %}">Добавить отгул</a>
+                    </li>
+                    <li class="nav-item">
+                        {% if user.is_staff == True%}
+                            <a class="nav-link" href="{% url 'overwork:admin' %}">Панель администратора</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'monitor:index' %}">Монитор здоровья</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:logout' %}">Выход</a>
+                    </li>
+                </ul>
+            </div>
+<!--            <p class="text-white text-right">{{today}}</p>-->
+        </nav>
+
+        <div class="container-fluid" style="margin-top:30px">
+            <div class="row">
+                {% block account %} {% endblock %}
+
+            </div>
+
+    </div>
+        <div class="jumbotron text-center" style="margin-bottom:0">
+      <p>Проект выпускной квалификационной работы <b>"Прикладная информатика в экономике"</b>.
+          <br>
+          Тема: "Автоматизация учета рабочего времени сотрудников войсковой части"
+          <br>
+          <br>
+          Автор: Григорьев Е.Н. (группа ООБП-501)
+
+      </p>
+    </div>
+
+    </body>
+</html>

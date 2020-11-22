@@ -1,0 +1,20 @@
+{% extends './account.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %} Добавить отгул {% endblock %}
+
+{% block content %}
+    <div class="row ">
+        <div class="col-sm-4 ml-auto mt-2 pt-2 mr-auto " >
+            <h4>Добавить отгул</h4>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout='vertical'%}
+                {% buttons submit='Добавить' %} {% endbuttons %}
+            </form>
+        </div>
+        <div class="col-sm-8"></div>
+    </div>
+
+{% endblock %}
