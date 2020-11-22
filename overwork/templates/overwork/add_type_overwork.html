@@ -1,0 +1,43 @@
+{% extends './account.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %} Добавить тип прерработки {% endblock %}
+
+{% block content %}
+    <div class="row ">
+        <div class="col-sm-4 ml-auto mt-2 pt-2 mr-auto " >
+            <h4>Добавить тип переработки</h4>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout='vertical'%}
+                {% buttons submit='Добавить' %} {% endbuttons %}
+            </form>
+        </div>
+        <div class="col-sm-8"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Зарегестрированные типы переработки</h4>
+            <table class="table table-borderless table-hover">
+                <thead>
+                  <tr>
+                    <th>Тип</th>
+                    <th>Описание</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for t in type %}
+                  <tr>
+                    <td>{{t.name_type}}</td>
+                    <td>{{t.description_type}}</td>
+
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+        </div>
+    </div>
+
+{% endblock %}

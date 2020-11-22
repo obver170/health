@@ -1,0 +1,27 @@
+{% extends './account.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %} Добавить переработку {% endblock %}
+
+{% block content %}
+    <div class="row ">
+        <div class="col-sm-4 ml-auto mt-2 pt-2 mr-auto " >
+            <h4>Добавить переработку</h4>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout='vertical'%}
+                {% buttons submit='Добавить' %} {% endbuttons %}
+            </form>
+        </div>
+        <div class="col-sm-8"></div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <p>Если в списке выпадающего меню отсутствует
+                <a href="{% url 'overwork:add_type_overwork' %}">тип переработки</a>
+                необходимо зарегестрировать данные на профильном разделе</p>
+        </div>
+    </div>
+
+{% endblock %}

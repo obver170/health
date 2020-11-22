@@ -1,0 +1,174 @@
+{% extends './account.html' %}
+{% load bootstrap4 %}
+
+
+{% block title %} Статистика профиля {% endblock %}
+
+
+
+{% block content %}
+<div class="display-4 pb-5">Статистика профиля</div>
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="font-weight-bold"> {% now "d.m.Y H:i" %} </p>
+            <div id="accordion">
+                <div class="card">
+                  <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseFive">
+                      Переработка подтверждённая руководителем
+                        <span class="badge badge-primary badge-pill ">{{overwork_isTrue|length}}</span>
+                    </a>
+                  </div>
+                  <div id="collapseFive" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                     <table class="table table-sm">
+                            <tbody>
+                                {% for over in overwork_isTrue %}
+                                <tr>
+                                    <td>{{over.date}}</td>
+                                    <td>{{over.type_overwork}}</td>
+                                    <td>{{over.amount_hour}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseSix">
+                      Отгулы подтверждённые руководителем
+                        <span class="badge badge-primary badge-pill ">{{day_off_isTrue|length}}</span>
+                    </a>
+                  </div>
+                  <div id="collapseSix" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                     <table class="table table-sm">
+                            <tbody>
+                                {% for over in day_off_isTrue %}
+                                <tr>
+                                    <td>{{over.date}}</td>
+                                    <td>{{over.type_overwork}}</td>
+                                    <td>{{over.amount_hour}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                      Переработка на этапе рассмотрения
+                        <span class="badge badge-primary badge-pill ">{{overwork_not_verifed|length}}</span>
+                    </a>
+                  </div>
+                  <div id="collapseOne" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                     <table class="table table-sm">
+                            <tbody>
+                                {% for over in overwork_not_verifed %}
+                                <tr>
+                                    <td>{{over.date}}</td>
+                                    <td>{{over.type_overwork}}</td>
+                                    <td>{{over.amount_hour}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseTwo">
+                      Отгулы на этапе рассмотрения
+                        <span class="badge badge-primary badge-pill ">{{day_off_not_verifed|length}}</span>
+                    </a>
+                  </div>
+                  <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                     <table class="table table-sm">
+
+                        <tbody>
+                            {% for day in day_off_not_verifed %}
+                            <tr>
+                                <td>{{day.date}}</td>
+                                <td>{{day.type_day_off}}</td>
+                                <td>{{day.amount_hour}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                    </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseThree">
+                      Отклонённая переработка
+                        <span class="badge badge-primary badge-pill ">{{overwork_not_True|length}}</span>
+                    </a>
+                  </div>
+                  <div id="collapseThree" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                     <table class="table table-sm">
+                            <tbody>
+                                {% for over in overwork_not_True %}
+                                <tr>
+                                    <td>{{over.date}}</td>
+                                    <td>{{over.type_overwork}}</td>
+                                    <td>{{over.amount_hour}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseFour">
+                      Отклонённые отгулы
+                        <span class="badge badge-primary badge-pill ">{{day_off_not_True|length}}</span>
+                    </a>
+                  </div>
+                  <div id="collapseFour" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                     <table class="table table-sm">
+                            <tbody>
+                                {% for over in day_off_not_True %}
+                                <tr>
+                                    <td>{{over.date}}</td>
+                                    <td>{{over.type_overwork}}</td>
+                                    <td>{{over.amount_hour}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 pt-3 pb-3">
+            {% if my_vacations|length < 6 %}
+            <span class="text-danger display-4">{{my_vacations|length}} </span><h3>выходных в текущем месяце</h3>
+            {% endif %}
+            {% if my_vacations|length > 10 %}
+            <span class="text-success display-4">{{my_vacations|length}} </span><h3>выходных в текущем месяце</h3>
+            {% endif %}
+            {% if my_vacations|length > 6 and my_vacations|length < 10 %}
+            <span class="display-4"> {{my_vacations|length}} </span> <h3>выходных в текущем месяце</h3>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
