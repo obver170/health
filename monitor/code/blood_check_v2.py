@@ -417,3 +417,4 @@ class BloodCheck:
 # s = s.encode('cp1251')
 # print(s)
 # print(type(s))
+# Проверяю команду pull
